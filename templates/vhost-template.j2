@@ -1,0 +1,32 @@
+# {{ ansible_managed }}
+
+{% for server in nginx_vhost.servers %}
+server {
+   listen {{ server.port|default('80') }}{% if server.ssl|default(false) %} ssl{% endif %};
+   server_name {{ server.server_name }}{% for alias in server.aliases|default([]) %} {{ alias }}{% endfor %};
+{% if server.web_root|default(false) %}
+   root {{ server.web_root }};
+{% endif %}
+
+   index index.html index.php;
+   client_max_body_size {{ nginx_max_upload_size }};
+   large_client_header_buffers {{ nginx_header_buffers }};
+
+{% if server.access_log %}
+   access_log /var/log/nginx/{{ server.server_name }}-access_log {{ server.log_type|default('') }};
+{% endif %}
+{% if server.error_log %}
+   error_log /var/log/nginx/{{ server.server_name }}-error_log info;
+{% endif %}
+
+{% if server.ssl|default(false) %}
+   ssl_certificate {{ server.ssl_cert }};
+   ssl_certificate_key {{ server.ssl_key }};
+{% endif %}
+{% for location in server.locations %}
+   location {{ location.path }} {
+      {{ location.content }}
+   }
+{% endfor %}
+}
+{% endfor %}
