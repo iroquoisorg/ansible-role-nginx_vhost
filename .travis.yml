@@ -20,6 +20,9 @@ install:
   # Install required roles
   - ansible-galaxy install -r tests/requirements.yml --roles-path ../
 
+  # generate SSL keys
+  - sudo openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/site.example.com.key -out /etc/ssl/site.example.com.crt -subj "/C=US/ST=New York/L=New York/O=Test Organization/OU=Unit/CN=site.example.com/emailAddress=sysadmin@example.com"
+
 script:
   # Check the role/playbook's syntax.
   - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
