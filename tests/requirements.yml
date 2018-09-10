@@ -1,0 +1,5 @@
+---
+- src: https://github.com/iroquoisorg/ansible-role-nginx.git
+  name: nginx
+  version: master
+  scm: git
