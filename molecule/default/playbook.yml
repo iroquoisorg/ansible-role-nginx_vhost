@@ -1,6 +1,7 @@
 ---
-- hosts: localhost
-  remote_user: root
+- name: Converge
+  hosts: all
+  become: true
   vars:
     nginx_vhost_host: "site.example.com"
     nginx_vhost_php: true
@@ -47,6 +48,15 @@
             - path: "~ ^.*$"
               content: |
                 return 301 https://$server_name$request_uri;
+  pre_tasks:
+    - name: Generate SSL certificate
+      command: |
+        openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/site.example.com.key \
+          -out /etc/ssl/site.example.com.crt \
+          -subj "/C=US/ST=New York/L=New York/O=Test Organization/OU=Unit/CN=site.example.com/emailAddress=sysadmin@example.com"
+      args:
+        creates: /etc/ssl/site.example.com.crt
+      become: true
+
   roles:
-    - iroquoisorg.nginx
-    - ansible-role-nginx_vhost
+    - role: ansible-role-nginx_vhost

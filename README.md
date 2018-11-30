@@ -36,3 +36,7 @@ nginx_log_type: ""
 nginx_vhost_php: false
 
 ```
+
+# Development
+
+Please check [development guide](DEVELOPMENT.md) for details about developing and testing this role.
