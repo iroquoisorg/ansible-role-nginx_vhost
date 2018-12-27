@@ -1,6 +1,6 @@
 # nginx_vhost
 
-[![Build Status](https://travis-ci.com/iroquoisorg/ansible-role-nginx_vhost.svg?branch=master)](https://travis-ci.com/iroquoisorg/ansible-role-memcached)
+[![Build Status](https://travis-ci.com/iroquoisorg/ansible-role-nginx_vhost.svg?branch=master)](https://travis-ci.com/iroquoisorg/ansible-role-nginx_vhost)
 
 Ansible role for nginx_vhost
 
@@ -13,7 +13,7 @@ This role was prepared and tested for Ubuntu 16.04.
 # Default settings
 
 ```
-
+---
 nginx_vhost_host: ""
 nginx_vhost_web_root: ""
 nginx_vhost_web_port: 80
