@@ -3,8 +3,13 @@
   hosts: all
   become: true
   vars:
+    nginx_http_params:
+      - "log_format main '[$time_local] $remote_addr - $http_x_forwarded_for - $remote_user $request $status $body_bytes_sent $http_referer $http_user_agent $http_x_original_host $http_x_forwarded_port $http_x_forwarded_proto'"
+      - "add_header X-Backend-Server $hostname"
     nginx_vhost_host: "site.example.com"
     nginx_vhost_php: true
+    nginx_max_upload_size: "10M"
+    nginx_server_names_hash_bucket_size: 128
     nginx_vhost:
       servers:
         - server_name: site.example.com

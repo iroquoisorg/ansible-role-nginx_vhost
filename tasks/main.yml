@@ -11,7 +11,7 @@
     src: htpasswd-users.j2
     owner: "{{ nginx_vhost_nginx_user }}"
     group: "{{ nginx_vhost_nginx_group }}"
-  when: nginx_vhost_basic_auth_users is defined and nginx_vhost_basic_auth_users > 0
+  when: nginx_vhost_basic_auth_users is defined and nginx_vhost_basic_auth_users | length > 0
 
 - name: Copy virtualhost configurations
   template:
